@@ -10,10 +10,13 @@ LIMIT = 1000
 
 def rows_as_dicts(conn, table, limit=LIMIT):
     conn.row_factory = sqlite3.Row
-    rows = conn.execute(
-        f"SELECT * FROM {table} ORDER BY rowid LIMIT ?",
-        (limit,),
-    ).fetchall()
+    if limit is None:
+        rows = conn.execute(f"SELECT * FROM {table} ORDER BY rowid").fetchall()
+    else:
+        rows = conn.execute(
+            f"SELECT * FROM {table} ORDER BY rowid LIMIT ?",
+            (limit,),
+        ).fetchall()
     return [dict(row) for row in rows]
 
 
@@ -114,8 +117,8 @@ def main():
         ]
 
         for entity_type, table, id_column, actor_column in audit_sources:
-            # Every review needs an audit event and version snapshot for integrity checks.
-            source_rows = rows_as_dicts(conn, table, limit=10000) if entity_type == "REVIEW" else rows_as_dicts(conn, table)
+            # Audit and version history must cover every row, not only a sample.
+            source_rows = rows_as_dicts(conn, table, limit=None)
 
             for index, row in enumerate(source_rows, start=1):
                 entity_id = row[id_column]
