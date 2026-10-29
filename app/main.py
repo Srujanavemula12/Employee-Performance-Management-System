@@ -507,7 +507,7 @@ loadDashboard();
 </script>
 </body>
 </html>
-""""""
+"""
     return HTMLResponse(content=html)
 
 
