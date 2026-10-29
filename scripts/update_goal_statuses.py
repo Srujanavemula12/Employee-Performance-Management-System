@@ -48,7 +48,6 @@ def main():
                 "Database was not modified."
             )
 
-        # Check expected record counts before changing anything.
         key_result_count = conn.execute(
             "SELECT COUNT(*) FROM key_results"
         ).fetchone()[0]
@@ -73,14 +72,12 @@ def main():
                 old_status = goal["status"]
 
                 if old_status == new_status:
-                    # This script records actual status changes only.
                     counts[new_status] += 1
                     continue
 
                 old_goal = dict(goal)
                 new_version = goal["version"] + 1
 
-                # Keep key-result statuses consistent with the goal.
                 if new_status == "COMPLETED":
                     conn.execute("""
                         UPDATE key_results
@@ -105,7 +102,6 @@ def main():
                         WHERE goal_id = ?
                     """, (goal_id,))
                 else:
-                    # AT_RISK is a goal-only status in this schema.
                     conn.execute("""
                         UPDATE key_results
                         SET status = 'IN_PROGRESS',
@@ -125,7 +121,6 @@ def main():
                 ).fetchone()
                 new_goal = dict(updated)
 
-                # Preserve a version snapshot for the updated goal.
                 latest_snapshot = conn.execute("""
                     SELECT MAX(version_number)
                     FROM record_versions
