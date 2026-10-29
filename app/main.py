@@ -370,12 +370,12 @@ def dashboard_page():
   <aside class="rail" aria-label="Quick navigation">
     <div class="rail-logo">P</div>
     <a class="rail-link active" href="/dashboard" aria-label="Dashboard">▦</a>
-    <a class="rail-link" href="/ui/employees" aria-label="Employees">♙</a>
-    <a class="rail-link" href="/ui/goals" aria-label="Goals">◎</a>
-    <a class="rail-link" href="/ui/reviews" aria-label="Reviews">▤</a>
-    <a class="rail-link" href="/ui/approvals" aria-label="Approvals">✓</a>
+    <a class="rail-link" href="/employees" aria-label="Employees">♙</a>
+    <a class="rail-link" href="/goals" aria-label="Goals">◎</a>
+    <a class="rail-link" href="/reviews" aria-label="Reviews">▤</a>
+    <a class="rail-link" href="/approvals" aria-label="Approvals">✓</a>
     <div class="rail-spacer"></div>
-    <a class="rail-link" href="/ui/audit-events" aria-label="Audit activity">◷</a>
+    <a class="rail-link" href="/audit-events" aria-label="Audit activity">◷</a>
     <a class="rail-link" href="/docs" aria-label="API docs">⌘</a>
   </aside>
   <aside class="sidebar" aria-label="Main navigation">
@@ -385,17 +385,17 @@ def dashboard_page():
       <a class="active" href="/dashboard"><span class="nav-icon">▦</span>Dashboard</a>
       <a href="#analytics"><span class="nav-icon">▥</span>Analytics</a>
       <a href="#activity"><span class="nav-icon">◉</span>Performance pulse</a>
-      <a href="/ui/goals"><span class="nav-icon">⌁</span>Goals &amp; outcomes</a>
-      <a href="/ui/check-ins"><span class="nav-icon">⌄</span>Check-ins</a>
-      <a href="/ui/reviews"><span class="nav-icon">▤</span>Review cycles</a>
-      <a href="/ui/approvals"><span class="nav-icon">✓</span>Approvals</a>
+      <a href="/goals"><span class="nav-icon">⌁</span>Goals &amp; outcomes</a>
+      <a href="/check-ins"><span class="nav-icon">⌄</span>Check-ins</a>
+      <a href="/reviews"><span class="nav-icon">▤</span>Review cycles</a>
+      <a href="/approvals"><span class="nav-icon">✓</span>Approvals</a>
     </nav>
     <div class="side-divider"></div>
     <div class="side-label">Workspaces</div>
     <nav class="nav">
-      <a href="/ui/employees"><span class="nav-icon">♙</span>Employee directory</a>
-      <a href="/ui/evidence"><span class="nav-icon">⌗</span>Evidence library</a>
-      <a href="/ui/audit-events"><span class="nav-icon">◷</span>Audit trail</a>
+      <a href="/employees"><span class="nav-icon">♙</span>Employee directory</a>
+      <a href="/evidence"><span class="nav-icon">⌗</span>Evidence library</a>
+      <a href="/audit-events"><span class="nav-icon">◷</span>Audit trail</a>
       <a href="/docs"><span class="nav-icon">⚙</span>API &amp; system</a>
     </nav>
     <div class="sidebar-bottom"><strong>✦ &nbsp; People-first insights</strong>Turn employee progress into clear, evidence-backed decisions.<a href="/docs">Explore API ↗</a></div>
@@ -562,77 +562,6 @@ loadDashboard();
 </html>
 """
     return HTMLResponse(content=html)
-
-
-@app.get("/ui/{section}", response_class=HTMLResponse, tags=["Dashboard UI"])
-def data_page(section: str):
-    page_titles = {
-        "employees": "Employee directory",
-        "goals": "Goals & outcomes",
-        "check-ins": "Employee check-ins",
-        "reviews": "Review cycles",
-        "approvals": "Approvals workflow",
-        "evidence": "Evidence library",
-        "audit-events": "Audit trail",
-    }
-    if section not in page_titles:
-        raise HTTPException(status_code=404, detail="Page not found.")
-    title = page_titles[section]
-    html = r"""<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PeopleOS · __TITLE__</title>
-<style>
-:root{color-scheme:dark;--bg:#111a2a;--panel:#182538;--panel2:#202e45;--border:#2b3b54;--text:#edf2ff;--muted:#91a0b9;--purple:#8c7bff;--blue:#5b8cff;--green:#79e0b0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:22px;background:linear-gradient(125deg,#b9b5f1,#c7d6f2 45%,#a7bce8);color:var(--text)}a{text-decoration:none;color:inherit}.shell{max-width:1400px;min-height:calc(100vh - 44px);margin:auto;display:grid;grid-template-columns:54px 210px minmax(0,1fr);overflow:hidden;border:1px solid #aab7d4;border-radius:14px;background:var(--bg);box-shadow:0 22px 70px #28335a30}.rail{background:#111b2c;border-right:1px solid var(--border);display:flex;align-items:center;flex-direction:column;padding:18px 8px;gap:13px}.logo{height:36px;width:36px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(145deg,#a08dff,#5d76fa);font-weight:900;margin-bottom:12px}.rail a{height:36px;width:36px;display:grid;place-items:center;border-radius:10px;color:#9aa8c1}.rail a:hover{background:#2c3474;color:white}.side{background:#162235;border-right:1px solid #304058;padding:24px 13px;display:flex;flex-direction:column}.brand{font-size:19px;font-weight:800;padding:0 8px 28px}.brand span{color:#aebbd0;font-weight:400}.label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#91a0b9;margin:0 10px 10px}.nav{display:grid;gap:4px}.nav a{display:flex;gap:10px;align-items:center;padding:11px 10px;border-radius:9px;color:#91a0b9;font-size:12px}.nav a:hover,.nav a.active{background:#2a3678;color:#fff}.nav a.active{box-shadow:inset 3px 0 #9b8cff}.main{min-width:0;padding:26px;background-image:linear-gradient(#ffffff03 1px,transparent 1px),linear-gradient(90deg,#ffffff03 1px,transparent 1px);background-size:26px 26px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:8px}.top h1{font-size:26px;margin:0;letter-spacing:-.04em}.top p{margin:8px 0 0;color:var(--muted);font-size:12px}.actions{display:flex;gap:9px;align-items:center}.search{background:#111b2d;border:1px solid #3b4b66;border-radius:24px;padding:10px 14px;color:var(--text);width:min(300px,40vw)}button{cursor:pointer;border:1px solid #3b4c67;background:#202f47;color:#e8edfa;padding:10px 13px;border-radius:9px}.summary{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 14px;color:var(--muted);font-size:12px;flex-wrap:wrap}.panel{background:linear-gradient(145deg,#1b293e,#172438);border:1px solid #2b3c55;border-radius:12px;padding:17px;min-width:0}.table-wrap{overflow:auto;border-radius:8px}table{border-collapse:collapse;width:100%;min-width:720px;font-size:12px}thead{background:#202e45}th{text-align:left;color:#b7c4dc;font-weight:650;white-space:nowrap}th,td{padding:13px 12px;border-bottom:1px solid #2b3b54;max-width:280px}td{color:#d8e0f0}tbody tr:hover{background:#202e4538}tbody tr:last-child td{border-bottom:0}.pill{display:inline-block;border-radius:20px;padding:4px 8px;background:#2b3678;color:#d7d4ff;font-size:10px}.muted{color:var(--muted)}.error{color:#ff9aa8;padding:10px 0;font-size:12px}.empty{padding:28px;text-align:center;color:var(--muted)}.foot{color:#71819b;font-size:10px;margin-top:16px;padding-top:12px;border-top:1px solid #293950;display:flex;justify-content:space-between;gap:10px}
-@media(max-width:900px){body{padding:8px}.shell{grid-template-columns:1fr;min-height:calc(100vh - 16px)}.rail{display:none}.side{padding:13px;border-right:0;border-bottom:1px solid var(--border)}.brand{padding:0 4px 12px}.label,.side .nav{display:none}.main{padding:16px}.search{width:100%}.actions{width:100%}.foot{flex-direction:column}}
-</style>
-</head>
-<body><div class="shell">
-<aside class="rail"><div class="logo">P</div><a href="/dashboard" title="Dashboard">▦</a><a href="/ui/employees" title="Employees">♙</a><a href="/ui/goals" title="Goals">◎</a><a href="/ui/reviews" title="Reviews">▤</a><a href="/ui/approvals" title="Approvals">✓</a><a href="/ui/audit-events" title="Audit trail">◷</a></aside>
-<aside class="side"><div class="brand">People<span>OS</span></div><div class="label">Main menu</div><nav class="nav">
-<a href="/dashboard">▦ Dashboard</a><a href="/ui/employees">♙ Employees</a><a href="/ui/goals">◎ Goals & outcomes</a><a href="/ui/check-ins">⌄ Check-ins</a><a href="/ui/reviews">▤ Reviews</a><a href="/ui/approvals">✓ Approvals</a><a href="/ui/evidence">⌗ Evidence</a><a href="/ui/audit-events">◷ Audit trail</a><a href="/docs">⚙ API docs</a>
-</nav></aside>
-<main class="main"><header class="top"><div><h1>__TITLE__</h1><p>Explore and manage your employee performance records.</p></div><div class="actions"><input class="search" id="search" type="search" placeholder="Search records..." aria-label="Search records"><button onclick="loadRows()">↻ Refresh</button></div></header>
-<div class="summary"><span id="count">Loading records…</span><span>PeopleOS · Live API data</span></div><div id="error" class="error" role="alert"></div>
-<section class="panel"><div class="table-wrap" id="table"><div class="empty">Loading your records…</div></div></section>
-<footer class="foot"><span>Employee Performance Management System</span><a href="/dashboard">← Back to dashboard</a></footer></main></div>
-<script>
-const section=__SECTION_JSON__;
-const config={
- employees:{url:"/employees?limit=200",title:"Employee directory"},
- goals:{url:"/goals?limit=200",title:"Goals & outcomes"},
- "check-ins":{url:"/check-ins?limit=200",title:"Employee check-ins"},
- reviews:{url:"/reviews?limit=200",title:"Review cycles"},
- approvals:{url:"/approvals?limit=200",title:"Approvals workflow"},
- evidence:{url:"/evidence?limit=200",title:"Evidence library"},
- "audit-events":{url:"/audit-events?limit=200",title:"Audit trail"}
-};
-let allRows=[];
-const esc=v=>String(v==null?"—":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const pretty=k=>k.replace(/_/g," ").replace(/\b\w/g,x=>x.toUpperCase());
-function showRows(){
- const query=document.getElementById("search").value.trim().toLowerCase();
- const rows=allRows.filter(row=>JSON.stringify(row).toLowerCase().includes(query));
- document.getElementById("count").textContent=rows.length+" records shown · "+allRows.length+" loaded (up to 200)";
- if(!rows.length){document.getElementById("table").innerHTML='<div class="empty">No matching records found.</div>';return;}
- const keys=[...new Set(rows.slice(0,30).flatMap(row=>Object.keys(row)))].slice(0,10);
- document.getElementById("table").innerHTML='<table><thead><tr>'+keys.map(k=>'<th>'+esc(pretty(k))+'</th>').join("")+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+keys.map(k=>{let v=row[k];if(v&&typeof v==="object")v=JSON.stringify(v);let value=String(v==null?"—":v);return '<td title="'+esc(value)+'">'+(value.length>100?esc(value.slice(0,100))+"…":esc(value))+'</td>';}).join("")+'</tr>').join("")+'</tbody></table>';
-}
-async function loadRows(){
- document.getElementById("error").textContent="";
- document.getElementById("table").innerHTML='<div class="empty">Loading records…</div>';
- try{const res=await fetch(config[section].url);if(!res.ok)throw new Error("HTTP "+res.status);const data=await res.json();if(!Array.isArray(data))throw new Error("API did not return a record list");allRows=data;showRows();}
- catch(e){document.getElementById("count").textContent="Unable to load records";document.getElementById("table").innerHTML='<div class="empty">Could not load records. Check that the database is initialized.</div>';document.getElementById("error").textContent=e.message;}
-}
-document.getElementById("search").addEventListener("input",showRows);loadRows();
-</script></body></html>"""
-    html = html.replace("__TITLE__", title).replace("__SECTION_JSON__", json.dumps(section))
-    return HTMLResponse(content=html)
-
-
 
 
 @app.get("/dashboard/anomalies", tags=["Dashboard"])
