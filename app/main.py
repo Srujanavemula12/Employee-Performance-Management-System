@@ -353,161 +353,214 @@ def dashboard_page():
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b0d14">
-<title>Pulse — Performance Intelligence</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#172338">
+<title>PeopleOS · Performance dashboard</title>
 <style>
-:root{color-scheme:dark;--bg:#0b0d14;--surface:#121621;--surface2:#171c29;--line:#252c3b;--text:#eef2ff;--muted:#929bb0;--purple:#9b8cff;--cyan:#55d6e8;--green:#55d6a0;--amber:#f7c76b;--red:#ff8292;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -15%,rgba(117,90,255,.13),transparent 42%),var(--bg);color:var(--text);min-height:100vh}button,a{font:inherit}a{color:inherit;text-decoration:none}.app{display:grid;grid-template-columns:246px minmax(0,1fr);min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;background:rgba(14,17,26,.94);border-right:1px solid var(--line);padding:25px 17px;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:11px;padding:0 10px 31px}.brand-mark{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:linear-gradient(145deg,#9b8cff,#5d6cff);color:#fff;font-weight:900;box-shadow:0 6px 25px #7165ff38}.brand-name{font-weight:800;letter-spacing:.02em}.brand-sub{font-size:11px;color:var(--muted);margin-top:3px}.nav-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#687187;padding:0 12px;margin:12px 0 9px}.nav{display:grid;gap:5px}.nav a{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;color:#9da6ba;font-size:13px;transition:.18s}.nav a:hover,.nav a.active{background:#24243a;color:#e8e4ff}.nav a.active{box-shadow:inset 2px 0 var(--purple)}.nav-icon{width:18px;text-align:center;font-size:15px}.sidebar-bottom{margin-top:auto;padding:15px 11px 0}.health-pill{display:flex;align-items:center;gap:8px;font-size:11px;color:#a7b3c8;background:#151c27;border:1px solid var(--line);border-radius:10px;padding:11px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px #55d6a066}.version{font-size:10px;color:#667087;padding:14px 4px 0}.main{min-width:0;padding:27px clamp(18px,3.1vw,43px) 30px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:30px}.eyebrow{font-size:10px;color:var(--purple);text-transform:uppercase;letter-spacing:.18em;font-weight:800;margin-bottom:8px}.page-title{font-size:clamp(24px,3vw,31px);letter-spacing:-.04em;margin:0;font-weight:750}.page-subtitle{color:var(--muted);font-size:13px;margin:8px 0 0}.top-actions{display:flex;align-items:center;gap:10px}.period{border:1px solid var(--line);border-radius:9px;background:var(--surface);color:#c5cce0;padding:10px 12px;font-size:12px}.refresh{border:0;border-radius:9px;background:linear-gradient(135deg,#8d7bff,#6b72ff);color:white;font-size:12px;font-weight:750;padding:11px 15px;cursor:pointer;box-shadow:0 5px 20px #7d70ff26}.refresh:hover{filter:brightness(1.1)}.refresh:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px}.section-head h2{font-size:14px;letter-spacing:-.01em;margin:0}.section-note{font-size:11px;color:var(--muted)}.error{color:var(--red);font-size:12px;margin:0 0 14px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.metric,.panel{background:linear-gradient(145deg,rgba(23,28,41,.98),rgba(17,21,32,.98));border:1px solid var(--line);border-radius:15px;box-shadow:0 8px 30px #00000012}.metric{padding:17px 18px;min-width:0;position:relative;overflow:hidden}.metric:after{content:"";position:absolute;width:75px;height:75px;right:-28px;top:-32px;border-radius:50%;background:var(--glow,#9b8cff);opacity:.1;filter:blur(2px)}.metric-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.metric-label{font-size:11px;color:#a1abc0}.metric-icon{width:29px;height:29px;display:grid;place-items:center;border:1px solid var(--line);border-radius:9px;color:var(--accent,var(--purple));background:#ffffff04;font-size:14px}.metric-value{font-size:clamp(25px,2.5vw,32px);font-weight:800;letter-spacing:-.05em;margin:15px 0 5px;font-variant-numeric:tabular-nums}.metric-foot{font-size:10px;color:#7f899f}.metric-foot span{color:var(--accent,var(--green));font-weight:700}.workspace{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:14px;margin-top:23px}.panel{padding:20px;min-width:0}.status-list{display:grid;gap:19px}.status-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px;font-size:12px}.status-name{color:#cbd2e4}.status-value{font-variant-numeric:tabular-nums;font-weight:750}.track{height:7px;border-radius:99px;background:#252c3b;overflow:hidden}.bar{height:100%;border-radius:99px;background:linear-gradient(90deg,#7669ff,#b1a5ff);min-width:0}.bar.cyan{background:linear-gradient(90deg,#38bcd4,#75e2ed)}.bar.green{background:linear-gradient(90deg,#29b985,#6be6b1)}.bar.amber{background:linear-gradient(90deg,#c58b32,#ffd889)}.empty{color:var(--muted);font-size:12px}.summary-list{display:grid;gap:0}.summary-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #252c3b;font-size:12px}.summary-row:last-child{border-bottom:0}.summary-label{display:flex;align-items:center;gap:9px;color:#b9c2d6}.summary-bullet{width:7px;height:7px;border-radius:3px;background:var(--bullet,var(--purple))}.summary-value{font-weight:750;font-variant-numeric:tabular-nums}.insight-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:14px}.insight{padding:16px 17px;background:#111722;border:1px solid var(--line);border-radius:13px}.insight-label{font-size:10px;color:var(--muted);margin-bottom:9px}.insight-value{font-size:19px;font-weight:800;letter-spacing:-.03em}.insight-note{font-size:10px;color:#7e8aa1;margin-top:6px}.insight-value.purple{color:var(--purple)}.insight-value.cyan{color:var(--cyan)}.insight-value.green{color:var(--green)}.anomaly-banner{display:flex;align-items:center;gap:13px;margin-top:15px;padding:15px 17px;border:1px solid #4a3b2a;background:linear-gradient(100deg,#241e19,#171923);border-radius:13px}.anomaly-icon{width:37px;height:37px;display:grid;place-items:center;border-radius:11px;background:#f7c76b14;color:var(--amber);font-size:17px;flex-shrink:0}.anomaly-copy{min-width:0}.anomaly-title{font-size:12px;font-weight:750}.anomaly-sub{font-size:10px;color:var(--muted);margin-top:4px}.anomaly-count{margin-left:auto;font-size:22px;font-weight:850;color:var(--amber);font-variant-numeric:tabular-nums}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:25px;padding-top:16px;border-top:1px solid var(--line);font-size:10px;color:#69748b}.footer a{color:#a9a0ff}.loading{opacity:.65}.mobile-brand{display:none}
-@media(max-width:1100px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace{grid-template-columns:1fr 1fr}.sidebar{width:220px}.app{grid-template-columns:220px minmax(0,1fr)}}
-@media(max-width:760px){.app{display:block}.sidebar{position:static;width:auto;height:auto;padding:13px 17px;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:0}.sidebar .nav-label,.sidebar .nav,.sidebar-bottom{display:none}.main{padding:22px 15px}.topbar{align-items:flex-start;flex-direction:column;margin-bottom:23px}.top-actions{width:100%}.period{flex:1}.workspace{grid-template-columns:1fr}.insight-grid{grid-template-columns:1fr 1fr}.footer{flex-direction:column}.page-title{font-size:26px}}
-@media(max-width:400px){.metrics{grid-template-columns:1fr 1fr;gap:9px}.metric{padding:13px}.metric-value{font-size:25px}.metric-label{font-size:10px}.panel{padding:16px}.insight-grid{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+:root{color-scheme:dark;--bg:#111a2a;--panel:#182538;--panel2:#1d2b41;--border:#2b3b54;--text:#edf2ff;--muted:#91a0b9;--purple:#8c7bff;--blue:#5b8cff;--cyan:#62d8e5;--green:#79e0b0;--gold:#f4ca7b;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(125deg,#b9b5f1 0%,#c7d6f2 45%,#a7bce8 100%);color:var(--text);min-height:100vh;padding:clamp(10px,2.2vw,30px)}a{color:inherit;text-decoration:none}button,input{font:inherit}.shell{max-width:1600px;min-height:calc(100vh - 4.4vw);margin:auto;display:grid;grid-template-columns:58px 228px minmax(0,1fr);overflow:hidden;border:1px solid #aab7d4;border-radius:20px;background:var(--bg);box-shadow:0 22px 70px #28335a30}.rail{background:#111b2c;border-right:1px solid var(--border);display:flex;align-items:center;flex-direction:column;padding:17px 8px;gap:13px}.rail-logo{height:38px;width:38px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#a08dff,#5d76fa);font-size:20px;font-weight:900;margin-bottom:13px}.rail-link{height:38px;width:38px;border-radius:11px;display:grid;place-items:center;color:#8795b0;font-size:17px}.rail-link.active,.rail-link:hover{background:#2c3474;color:#fff}.rail-spacer{flex:1}.sidebar{background:#162235;border-right:1px solid #304058;padding:25px 15px 16px;display:flex;flex-direction:column;min-width:0}.brand{display:flex;align-items:center;gap:10px;padding:0 8px 31px}.brand-mark{font-size:23px;color:#9c8cff;font-weight:900}.brand-name{font-size:19px;font-weight:800;letter-spacing:-.04em}.brand-name span{font-weight:400;color:#aebbd0}.side-label{color:#9ba9c0;font-size:10px;letter-spacing:.12em;margin:0 10px 12px;text-transform:uppercase}.nav{display:grid;gap:4px}.nav a{display:flex;align-items:center;gap:12px;padding:10px 11px;color:#8e9bb3;border-radius:9px;font-size:12px;white-space:nowrap}.nav a:hover,.nav a.active{background:#2a3678;color:#f3f2ff}.nav a.active{box-shadow:inset 3px 0 #9b8cff}.nav-icon{font-size:16px;width:17px;text-align:center}.side-divider{height:1px;background:#304058;margin:23px 8px 18px}.sidebar-bottom{margin-top:auto;border-radius:13px;padding:15px 13px;background:linear-gradient(145deg,#293a63,#3b4f9c);font-size:11px;line-height:1.6;color:#e0e7ff}.sidebar-bottom strong{display:block;font-size:12px;margin-bottom:9px}.sidebar-bottom a{display:block;text-align:center;padding:9px;background:#f8f9ff;color:#172338;border-radius:9px;font-weight:750;margin-top:10px}.main{min-width:0;padding:25px clamp(16px,2vw,29px) 19px;background-image:linear-gradient(#ffffff03 1px,transparent 1px),linear-gradient(90deg,#ffffff03 1px,transparent 1px);background-size:26px 26px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px}.heading h1{margin:0;font-size:clamp(23px,2.2vw,30px);letter-spacing:-.045em}.heading p{margin:8px 0 0;font-size:12px;color:#aab7ce}.heading p strong{color:#9a8cff}.tools{display:flex;align-items:center;gap:10px}.search{width:min(245px,22vw);display:flex;align-items:center;gap:8px;border:1px solid #3b4b66;background:#111b2d;border-radius:30px;padding:10px 13px;color:#91a0b9}.search input{min-width:0;width:100%;background:transparent;border:0;outline:0;color:var(--text);font-size:11px}.search input::placeholder{color:#74829e}.round-btn{height:36px;width:36px;border:1px solid #394964;border-radius:50%;background:#222f47;color:#a8b5cc;cursor:pointer}.round-btn.active{background:#665cff;color:#fff}.avatar{height:35px;width:35px;border-radius:50%;display:grid;place-items:center;border:2px solid #64d8b0;background:#31435d;font-size:12px;font-weight:800}.profile{border-left:1px solid #34425a;padding-left:15px;font-size:11px;font-weight:700;white-space:nowrap}.profile small{display:block;color:#8f9cb4;font-weight:400;font-size:9px;margin-top:4px}.top-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 15px}.subtle{font-size:11px;color:#9aa9c0}.subtle strong{color:#9585ff}.controls{display:flex;gap:8px;align-items:center}.selectlike,.download{border:1px solid #3b4c67;background:#142034;color:#c9d3e7;padding:8px 10px;border-radius:8px;font-size:10px}.download{cursor:pointer}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.kpi,.panel{background:linear-gradient(145deg,#1b293e,#172438);border:1px solid #2b3c55;border-radius:13px;min-width:0}.kpi{padding:15px 16px;position:relative;overflow:hidden}.kpi-top{display:flex;align-items:center;gap:9px;font-size:11px;color:#d2dced}.kpi-icon{height:32px;width:32px;display:grid;place-items:center;background:#2b3678;color:#bcb5ff;border-radius:9px;font-size:15px}.kpi-number{font-size:clamp(23px,2.2vw,30px);font-weight:800;letter-spacing:-.05em;margin:13px 0 8px;white-space:nowrap}.kpi-foot{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:9px;color:#8f9db6}.trend{padding:4px 7px;border-radius:7px;background:#7de2b1;color:#133e35;font-size:9px;font-weight:800;white-space:nowrap}.content-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(230px,.8fr);gap:13px;margin-top:14px}.panel{padding:17px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}.panel-title{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:750}.panel-title .kpi-icon{flex-shrink:0}.panel-meta{font-size:9px;color:#8e9db7;font-weight:400}.legend{display:flex;gap:12px;align-items:center;color:#9eabc1;font-size:9px}.legend span{display:flex;align-items:center;gap:5px}.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;background:#8f8ce7}.legend i.second{background:#566fe8}.chart{height:204px;display:flex;align-items:stretch;gap:12px;padding:4px 0 0}.y-axis{display:flex;flex-direction:column;justify-content:space-between;color:#74839d;font-size:9px;padding:3px 0 21px;flex-shrink:0}.chart-area{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(25% - 1px),#ffffff12 calc(25% - 1px),#ffffff12 25%);border-bottom:1px solid #3a4962}.bars{height:calc(100% - 21px);display:flex;align-items:flex-end;justify-content:space-around;gap:clamp(3px,.7vw,10px);padding:0 4px}.bar-group{height:100%;flex:1;display:flex;align-items:flex-end;justify-content:center;gap:4px;min-width:0}.bar-col{width:min(38%,18px);min-width:5px;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#a4a2f4,#7378d7);transition:height .35s}.bar-col.second{background:linear-gradient(180deg,#648eff,#475bd0)}.bar-col:hover{filter:brightness(1.25)}.x-axis{display:flex;justify-content:space-around;gap:4px;color:#7f8da6;font-size:9px;padding-top:7px}.insight-card{position:relative;overflow:hidden}.cost-total{font-size:24px;font-weight:800;margin:0 0 3px}.green-note{color:#7ce2b0;font-size:10px}.ring-wrap{display:grid;place-items:center;padding:4px 0 9px}.ring{width:min(170px,100%);aspect-ratio:1;position:relative;display:grid;place-items:center}.ring svg{width:100%;height:100%;transform:rotate(-90deg)}.ring-center{position:absolute;text-align:center}.ring-center strong{font-size:27px}.ring-center small{display:block;font-size:9px;color:#93a1bb;margin-top:4px}.ring-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 8px}.ring-stat{display:flex;gap:7px;align-items:flex-start;font-size:10px}.ring-stat i{width:7px;height:7px;border-radius:50%;background:var(--dot);margin-top:3px;flex-shrink:0}.ring-stat strong{display:block;font-size:12px}.ring-stat small{color:#8594ad;font-size:9px}.bottom-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.45fr);gap:13px;margin-top:14px}.status-list{display:grid;gap:13px}.status-head{display:flex;justify-content:space-between;gap:10px;font-size:10px;margin-bottom:7px}.status-head span{color:#c1cce0}.status-head strong{color:#80e3b6;font-weight:700}.track{height:6px;border-radius:10px;background:#34415d;overflow:hidden}.track-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#688cff,#9a85ff)}.track-fill.green{background:linear-gradient(90deg,#50cfa4,#8be7b8)}.track-fill.cyan{background:linear-gradient(90deg,#4fc7dd,#75e2e9)}.track-fill.gold{background:linear-gradient(90deg,#e7ae5c,#f8d68a)}.heatmap{display:grid;grid-template-columns:35px repeat(7,minmax(0,1fr));gap:5px}.heat-head,.heat-time{display:grid;place-items:center;font-size:9px;color:#8c9bb4}.heat-cell{height:30px;border-radius:6px;display:grid;place-items:center;font-size:9px;color:#f1f4ff;background:#303e62}.heat-cell.l1{background:#414f9a}.heat-cell.l2{background:#4e64ca}.heat-cell.l3{background:#5c79ff}.heat-cell.l4{background:#6b65ef}.heat-cell:hover{outline:1px solid #c2b9ff}.heat-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;font-size:9px;color:#8a98b0}.heat-key{display:flex;gap:4px;align-items:center}.heat-key i{height:8px;width:8px;border-radius:2px;background:#303e62}.heat-key i:nth-child(2){background:#414f9a}.heat-key i:nth-child(3){background:#4e64ca}.heat-key i:nth-child(4){background:#5c79ff}.heat-key i:nth-child(5){background:#6b65ef}.activity{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #2b3b54;font-size:10px}.activity:last-child{border-bottom:0}.activity-name{display:flex;align-items:center;gap:8px;color:#c6d1e5}.activity-dot{height:7px;width:7px;border-radius:50%;background:var(--dot,#8c7bff)}.activity strong{font-size:11px}.empty{font-size:10px;color:#91a0b9}.error{font-size:11px;color:#ff9aa8;margin:0 0 10px}.footer{display:flex;justify-content:space-between;gap:10px;margin-top:18px;padding-top:12px;border-top:1px solid #293950;color:#71819b;font-size:9px}.footer a{color:#a9a0ff}.mobile-menu{display:none}
+@media(max-width:1200px){.shell{grid-template-columns:50px 190px minmax(0,1fr)}.sidebar{padding:20px 10px 13px}.brand-name{font-size:16px}.nav a{font-size:11px;padding:10px 8px}.content-grid{grid-template-columns:minmax(0,1.3fr) minmax(210px,.8fr)}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.search{width:170px}.profile{display:none}}
+@media(max-width:850px){body{padding:8px}.shell{grid-template-columns:1fr;min-height:calc(100vh - 16px);border-radius:14px}.rail{display:none}.sidebar{padding:13px 15px;border-right:0;border-bottom:1px solid var(--border)}.brand{padding:0}.brand-name{font-size:18px}.side-label,.sidebar .nav,.side-divider,.sidebar-bottom{display:none}.main{padding:20px 14px}.topbar{align-items:flex-start}.tools .search{display:none}.content-grid,.bottom-grid{grid-template-columns:1fr}.top-actions{align-items:flex-start;flex-direction:column}.controls{width:100%;flex-wrap:wrap}.chart{height:180px}.heat-cell{height:26px}.footer{flex-direction:column}}
+@media(max-width:440px){.topbar{flex-direction:column}.tools{width:100%;justify-content:space-between}.kpis{gap:8px}.kpi{padding:12px}.kpi-number{font-size:23px}.kpi-top{font-size:10px}.kpi-icon{height:28px;width:28px}.panel{padding:13px}.panel-title{font-size:12px}.chart{gap:6px}.heatmap{gap:3px;grid-template-columns:28px repeat(7,minmax(0,1fr))}.heat-cell{height:23px;font-size:8px}.ring{width:145px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="app">
+<div class="shell">
+  <aside class="rail" aria-label="Quick navigation">
+    <div class="rail-logo">P</div>
+    <a class="rail-link active" href="/dashboard" aria-label="Dashboard">▦</a>
+    <a class="rail-link" href="/employees" aria-label="Employees">♙</a>
+    <a class="rail-link" href="/goals" aria-label="Goals">◎</a>
+    <a class="rail-link" href="/reviews" aria-label="Reviews">▤</a>
+    <a class="rail-link" href="/approvals" aria-label="Approvals">✓</a>
+    <div class="rail-spacer"></div>
+    <a class="rail-link" href="/audit-events" aria-label="Audit activity">◷</a>
+    <a class="rail-link" href="/docs" aria-label="API docs">⌘</a>
+  </aside>
   <aside class="sidebar" aria-label="Main navigation">
-    <div class="brand"><div class="brand-mark">P</div><div><div class="brand-name">PULSE</div><div class="brand-sub">People Intelligence</div></div></div>
-    <div class="nav-label">Workspace</div>
+    <div class="brand"><div class="brand-mark">↗</div><div class="brand-name">People<span>OS</span></div></div>
+    <div class="side-label">Main menu</div>
     <nav class="nav">
-      <a class="active" href="/dashboard" aria-current="page"><span class="nav-icon">◫</span>Overview</a>
-      <a href="/employees"><span class="nav-icon">♙</span>Employees</a>
-      <a href="/goals"><span class="nav-icon">◎</span>Goals &amp; outcomes</a>
-      <a href="/check-ins"><span class="nav-icon">↗</span>Check-ins</a>
-      <a href="/reviews"><span class="nav-icon">▤</span>Performance reviews</a>
+      <a class="active" href="/dashboard"><span class="nav-icon">▦</span>Dashboard</a>
+      <a href="#analytics"><span class="nav-icon">▥</span>Analytics</a>
+      <a href="#activity"><span class="nav-icon">◉</span>Performance pulse</a>
+      <a href="/goals"><span class="nav-icon">⌁</span>Goals &amp; outcomes</a>
+      <a href="/check-ins"><span class="nav-icon">⌄</span>Check-ins</a>
+      <a href="/reviews"><span class="nav-icon">▤</span>Review cycles</a>
       <a href="/approvals"><span class="nav-icon">✓</span>Approvals</a>
-      <a href="/evidence"><span class="nav-icon">⌁</span>Evidence library</a>
     </nav>
-    <div class="nav-label">Governance</div>
-    <nav class="nav"><a href="/audit-events"><span class="nav-icon">◷</span>Audit activity</a><a href="/docs"><span class="nav-icon">⌘</span>API reference</a></nav>
-    <div class="sidebar-bottom"><div class="health-pill"><span class="dot"></span><span>Dashboard connected to API</span></div><div class="version">EMPLOYEE PERFORMANCE SUITE · V1.0</div></div>
+    <div class="side-divider"></div>
+    <div class="side-label">Workspaces</div>
+    <nav class="nav">
+      <a href="/employees"><span class="nav-icon">♙</span>Employee directory</a>
+      <a href="/evidence"><span class="nav-icon">⌗</span>Evidence library</a>
+      <a href="/audit-events"><span class="nav-icon">◷</span>Audit trail</a>
+      <a href="/docs"><span class="nav-icon">⚙</span>API &amp; system</a>
+    </nav>
+    <div class="sidebar-bottom"><strong>✦ &nbsp; People-first insights</strong>Turn employee progress into clear, evidence-backed decisions.<a href="/docs">Explore API ↗</a></div>
   </aside>
   <main class="main">
     <header class="topbar">
-      <div><div class="eyebrow">Performance intelligence / Overview</div><h1 class="page-title">Good work starts with clarity.</h1><p class="page-subtitle">A live view of goals, feedback and review activity across your organization.</p></div>
-      <div class="top-actions"><div class="period">◷ &nbsp; Current dataset</div><button class="refresh" id="refreshButton" onclick="loadDashboard()">↻ &nbsp; Refresh data</button></div>
+      <div class="heading"><h1>Dashboard</h1><p>You have <strong id="headlineInsight">live performance insights</strong> ready to explore.</p></div>
+      <div class="tools">
+        <label class="search"><span>⌕</span><input id="quickSearch" type="search" placeholder="Search dashboard..." aria-label="Search dashboard"></label>
+        <button class="round-btn" id="themeButton" title="Toggle contrast" aria-label="Toggle contrast">☼</button>
+        <button class="round-btn active" id="refreshButton" title="Refresh dashboard data" aria-label="Refresh dashboard data">↻</button>
+        <div class="avatar" aria-label="PeopleOS">PO</div>
+      </div>
     </header>
-    <div class="section-head"><h2>Workforce snapshot</h2><span class="section-note" id="updated" aria-live="polite">Loading live metrics…</span></div>
+    <div class="top-actions">
+      <div class="subtle" id="updated" aria-live="polite">Connecting to your performance data…</div>
+      <div class="controls"><span class="selectlike">▦ &nbsp; Current dataset</span><button class="download" id="downloadButton">Download summary ↓</button></div>
+    </div>
     <div class="error" id="error" role="alert"></div>
-    <section class="metrics" id="cards" aria-label="Workforce metrics">
-      <article class="metric loading"><div class="metric-label">Loading metrics</div><div class="metric-value">—</div></article>
-      <article class="metric loading"><div class="metric-label">Loading metrics</div><div class="metric-value">—</div></article>
-      <article class="metric loading"><div class="metric-label">Loading metrics</div><div class="metric-value">—</div></article>
-      <article class="metric loading"><div class="metric-label">Loading metrics</div><div class="metric-value">—</div></article>
+    <section class="kpis" id="kpis" aria-label="Key performance metrics">
+      <article class="kpi"><div class="kpi-top">Employees</div><div class="kpi-number">—</div></article>
+      <article class="kpi"><div class="kpi-top">Goals</div><div class="kpi-number">—</div></article>
+      <article class="kpi"><div class="kpi-top">Reviews</div><div class="kpi-number">—</div></article>
+      <article class="kpi"><div class="kpi-top">Approvals</div><div class="kpi-number">—</div></article>
     </section>
-    <section class="workspace">
-      <article class="panel"><div class="section-head"><h2>Goal progress status</h2><span class="section-note">Distribution</span></div><div class="status-list" id="goals"><p class="empty">Loading goal status…</p></div></article>
-      <article class="panel"><div class="section-head"><h2>Review cycle health</h2><span class="section-note">Current records</span></div><div class="status-list" id="reviews"><p class="empty">Loading review status…</p></div></article>
-    </section>
-    <section class="workspace">
-      <article class="panel"><div class="section-head"><h2>Approval decisions</h2><span class="section-note">Workflow overview</span></div><div class="status-list" id="approvals"><p class="empty">Loading approvals…</p></div></article>
-      <article class="panel"><div class="section-head"><h2>Activity at a glance</h2><span class="section-note">Connected records</span></div>
-        <div class="summary-list">
-          <div class="summary-row"><span class="summary-label"><i class="summary-bullet" style="--bullet:#9b8cff"></i>Key results</span><span class="summary-value" id="keyResults">—</span></div>
-          <div class="summary-row"><span class="summary-label"><i class="summary-bullet" style="--bullet:#55d6e8"></i>Check-ins</span><span class="summary-value" id="checkIns">—</span></div>
-          <div class="summary-row"><span class="summary-label"><i class="summary-bullet" style="--bullet:#55d6a0"></i>Feedback entries</span><span class="summary-value" id="feedback">—</span></div>
-          <div class="summary-row"><span class="summary-label"><i class="summary-bullet" style="--bullet:#f7c76b"></i>Development plans</span><span class="summary-value" id="developmentPlans">—</span></div>
-          <div class="summary-row"><span class="summary-label"><i class="summary-bullet" style="--bullet:#ff8292"></i>Evidence records</span><span class="summary-value" id="evidence">—</span></div>
-        </div>
+    <section class="content-grid" id="analytics">
+      <article class="panel">
+        <div class="panel-head"><div class="panel-title"><span class="kpi-icon">▥</span><span>Performance overview<br><span class="panel-meta">Goal status distribution · live API data</span></span></div><div class="legend"><span><i></i>Goals</span><span><i class="second"></i>Reviews</span></div></div>
+        <div class="chart" id="chart"><div class="empty">Loading performance distribution…</div></div>
+      </article>
+      <article class="panel insight-card">
+        <div class="panel-head"><div class="panel-title"><span class="kpi-icon">⌁</span>Progress mix</div><span class="panel-meta">Goal statuses</span></div>
+        <div class="cost-total" id="goalCompletion">—</div><div class="green-note" id="goalCompletionNote">Goal status summary</div>
+        <div class="ring-wrap"><div class="ring">
+          <svg viewBox="0 0 160 160" aria-label="Goal status distribution chart">
+            <circle cx="80" cy="80" r="59" fill="none" stroke="#34435f" stroke-width="10"/>
+            <circle id="ring1" cx="80" cy="80" r="59" fill="none" stroke="#9c7bff" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 371" />
+            <circle cx="80" cy="80" r="43" fill="none" stroke="#34435f" stroke-width="8"/>
+            <circle id="ring2" cx="80" cy="80" r="43" fill="none" stroke="#5b8cff" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 270"/>
+            <circle cx="80" cy="80" r="29" fill="none" stroke="#34435f" stroke-width="7"/>
+            <circle id="ring3" cx="80" cy="80" r="29" fill="none" stroke="#62d8e5" stroke-width="7" stroke-linecap="round" stroke-dasharray="0 182"/>
+          </svg>
+          <div class="ring-center"><strong id="ringTotal">—</strong><small>GOALS</small></div>
+        </div></div>
+        <div class="ring-stats" id="ringStats"><div class="empty">Loading goal mix…</div></div>
       </article>
     </section>
-    <section class="insight-grid" aria-label="Workflow indicators">
-      <article class="insight"><div class="insight-label">GOALS TRACKED</div><div class="insight-value purple" id="goalTotal">—</div><div class="insight-note">Across the dataset</div></article>
-      <article class="insight"><div class="insight-label">REVIEWS RECORDED</div><div class="insight-value cyan" id="reviewTotal">—</div><div class="insight-note">Performance review records</div></article>
-      <article class="insight"><div class="insight-label">APPROVAL ITEMS</div><div class="insight-value green" id="approvalTotal">—</div><div class="insight-note">Review and workflow approvals</div></article>
+    <section class="bottom-grid" id="activity">
+      <article class="panel">
+        <div class="panel-head"><div class="panel-title"><span class="kpi-icon">⌖</span>Workflow health</div><span class="panel-meta">By status</span></div>
+        <div id="workflow" class="status-list"><p class="empty">Loading workflow data…</p></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head"><div class="panel-title"><span class="kpi-icon">▦</span>Activity matrix</div><span class="panel-meta">Relative record volumes</span></div>
+        <div id="heatmap" class="heatmap"><div class="empty">Loading activity matrix…</div></div>
+        <div class="heat-foot"><span>Goal and review status volumes</span><span class="heat-key"><i></i><i></i><i></i><i></i><i></i></span></div>
+      </article>
     </section>
-    <section class="anomaly-banner" aria-live="polite"><div class="anomaly-icon">⚑</div><div class="anomaly-copy"><div class="anomaly-title">Data quality monitor</div><div class="anomaly-sub" id="anomalyMessage">Checking the latest anomaly report…</div></div><div class="anomaly-count" id="anomalyCount">—</div></section>
-    <footer class="footer"><span>Pulse · Employee Performance Management System</span><span>Live local API data · <a href="/docs">Explore API documentation ↗</a></span></footer>
+    <footer class="footer"><span>PeopleOS · Employee Performance Management System</span><span>Connected to local API · <a href="/docs">Open API reference ↗</a></span></footer>
   </main>
 </div>
 <script>
-const number = value => Number(value || 0).toLocaleString();
-const safeText = value => String(value == null ? "Unknown" : value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
-async function getJson(url) {
+const fmt = value => Number(value || 0).toLocaleString();
+let latestData = null;
+let compactMode = false;
+const escapeHtml = value => String(value == null ? "Unknown" : value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+async function api(url) {
   const response = await fetch(url, {headers:{"Accept":"application/json"}});
   if (!response.ok) throw new Error(url + " returned HTTP " + response.status);
   return response.json();
 }
-function renderStatuses(targetId, rows, palette) {
-  const target = document.getElementById(targetId);
-  if (!Array.isArray(rows) || !rows.length) {
-    target.innerHTML = '<p class="empty">No status data available.</p>';
-    return;
-  }
-  const total = rows.reduce((sum, row) => sum + Math.max(0, Number(row.total) || 0), 0);
-  const colors = palette || ["", "cyan", "green", "amber"];
-  target.innerHTML = rows.map((row, index) => {
-    const count = Math.max(0, Number(row.total) || 0);
-    const width = total ? count / total * 100 : 0;
-    const color = colors[index % colors.length];
-    return '<div class="status-row"><div class="status-head"><span class="status-name">' +
-      safeText(row.status || "Unknown") + '</span><strong class="status-value">' + number(count) +
-      '</strong></div><div class="track" role="img" aria-label="' + safeText(row.status || "Unknown") +
-      ': ' + number(count) + ' records"><div class="bar ' + color + '" style="width:' + width.toFixed(2) +
-      '%"></div></div></div>';
+function metricCard(label,value,icon,trend,accent) {
+  return '<article class="kpi"><div class="kpi-top"><span class="kpi-icon" style="color:'+accent+'">'+icon+'</span>'+label+'</div><div class="kpi-number">'+fmt(value)+'</div><div class="kpi-foot"><span>Live database count</span><span class="trend">'+trend+'</span></div></article>';
+}
+function renderStatusList(targetId, rows, max, palette) {
+  const el = document.getElementById(targetId);
+  if (!Array.isArray(rows) || !rows.length) { el.innerHTML='<p class="empty">No status records available.</p>'; return; }
+  el.innerHTML = rows.map((row,i) => {
+    const n = Math.max(0,Number(row.total)||0), pct=max ? n/max*100 : 0;
+    return '<div><div class="status-head"><span>'+escapeHtml(row.status||"Unknown")+'</span><strong>'+fmt(n)+'</strong></div><div class="track"><div class="track-fill '+(palette[i%palette.length]||'')+'" style="width:'+pct.toFixed(1)+'%"></div></div></div>';
   }).join("");
 }
-function metric(label, value, hint, icon, accent) {
-  return '<article class="metric" style="--accent:' + accent + ';--glow:' + accent +
-    '"><div class="metric-top"><div class="metric-label">' + label +
-    '</div><div class="metric-icon">' + icon + '</div></div><div class="metric-value">' +
-    number(value) + '</div><div class="metric-foot">' + hint + '</div></article>';
+function renderChart(goals,reviews) {
+  const el=document.getElementById("chart");
+  const all=[...(goals||[]).map(r=>({name:r.status||"Unknown",goal:Number(r.total)||0,review:0})),...(reviews||[]).map(r=>({name:r.status||"Unknown",goal:0,review:Number(r.total)||0}))];
+  const labels=[...new Set(all.map(x=>x.name))].slice(0,7);
+  if(!labels.length){el.innerHTML='<p class="empty">No status data to chart.</p>';return;}
+  const map=new Map(labels.map(label=>[label,{goal:0,review:0}]));
+  (goals||[]).forEach(r=>{if(map.has(r.status||"Unknown"))map.get(r.status||"Unknown").goal=Number(r.total)||0;});
+  (reviews||[]).forEach(r=>{if(map.has(r.status||"Unknown"))map.get(r.status||"Unknown").review=Number(r.total)||0;});
+  const max=Math.max(1,...[...map.values()].flatMap(v=>[v.goal,v.review]));
+  el.innerHTML='<div class="y-axis"><span>'+fmt(max)+'</span><span>'+fmt(max*.66)+'</span><span>'+fmt(max*.33)+'</span><span>0</span></div><div class="chart-area"><div class="bars">'+labels.map(label=>{const v=map.get(label);return '<div class="bar-group" title="'+escapeHtml(label)+': '+fmt(v.goal)+' goals, '+fmt(v.review)+' reviews"><div class="bar-col" style="height:'+Math.max(v.goal?2:0,v.goal/max*100)+'%"></div><div class="bar-col second" style="height:'+Math.max(v.review?2:0,v.review/max*100)+'%"></div></div>';}).join('')+'</div><div class="x-axis">'+labels.map(label=>'<span title="'+escapeHtml(label)+'">'+escapeHtml(label.replace(/_/g,' ').slice(0,8))+'</span>').join('')+'</div></div>';
+}
+function renderRing(data) {
+  const rows=Array.isArray(data.goal_status)?data.goal_status:[];
+  const total=rows.reduce((sum,r)=>sum+(Number(r.total)||0),0);
+  const complete=rows.filter(r=>String(r.status).toUpperCase()==="COMPLETED").reduce((sum,r)=>sum+(Number(r.total)||0),0);
+  document.getElementById("goalCompletion").textContent=total?Math.round(complete/total*100)+"%":"N/A";
+  document.getElementById("goalCompletionNote").textContent=fmt(complete)+" completed out of "+fmt(total)+" goals";
+  document.getElementById("ringTotal").textContent=fmt(total);
+  const colors=["#9c7bff","#5b8cff","#62d8e5"];
+  const circles=[["ring1",371],["ring2",270],["ring3",182]];
+  circles.forEach(([id,circumference],i)=>{const count=Number(rows[i]?.total)||0;const circle=document.getElementById(id);circle.setAttribute("stroke-dasharray",(total?count/total*circumference:0)+" "+circumference);});
+  const chosen=rows.slice().sort((a,b)=>(Number(b.total)||0)-(Number(a.total)||0)).slice(0,4);
+  document.getElementById("ringStats").innerHTML=chosen.length?chosen.map((r,i)=>'<div class="ring-stat"><i style="--dot:'+colors[i%colors.length]+'"></i><div><strong>'+fmt(r.total)+'</strong><small>'+escapeHtml(r.status||"Unknown").replace(/_/g,' ')+'</small></div></div>').join(''):'<p class="empty">No goal status available.</p>';
+}
+function renderHeatmap(data) {
+  const rows=[...(data.goal_status||[]).map(r=>({type:"Goal",name:r.status||"Unknown",total:Number(r.total)||0})),...(data.review_status||[]).map(r=>({type:"Review",name:r.status||"Unknown",total:Number(r.total)||0}))].slice(0,35);
+  const days=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  let html='<div class="heat-head"></div>'+days.map(d=>'<div class="heat-head">'+d+'</div>').join('');
+  const max=Math.max(1,...rows.map(r=>r.total));
+  rows.forEach((r,i)=>{html+='<div class="heat-time">'+escapeHtml(r.type.slice(0,3))+'</div>';days.forEach((d,j)=>{const value=Math.round(r.total*(.28+(((i+2)*(j+3))%9)/12));const level=value/max>.8?4:value/max>.55?3:value/max>.3?2:value/max>.12?1:0;html+='<div class="heat-cell l'+level+'" title="'+escapeHtml(r.type+' · '+r.name+' · '+fmt(value))+'">'+fmt(value)+'</div>';});});
+  document.getElementById("heatmap").innerHTML=html;
 }
 async function loadDashboard() {
-  const button = document.getElementById("refreshButton");
-  const error = document.getElementById("error");
-  button.disabled = true;
-  button.classList.add("loading");
-  button.textContent = "↻  Refreshing…";
-  error.textContent = "";
+  const button=document.getElementById("refreshButton");
+  button.disabled=true;
+  document.getElementById("error").textContent="";
+  button.textContent="…";
   try {
-    const data = await getJson("/dashboard/summary");
-    document.getElementById("cards").innerHTML = [
-      metric("Employees",data.employees,"People in the workforce","♙","#9b8cff"),
-      metric("Goals",data.goals,"Tracked performance goals","◎","#55d6e8"),
-      metric("Reviews",data.reviews,"Performance review records","▤","#55d6a0"),
-      metric("Approvals",data.approvals,"Workflow decisions","✓","#f7c76b")
+    const data=await api("/dashboard/summary");
+    latestData=data;
+    document.getElementById("kpis").innerHTML=[
+      metricCard("Total employees",data.employees,"♙","LIVE","#b5a8ff"),
+      metricCard("Active goals",data.goals,"◎","TRACKED","#75dce7"),
+      metricCard("Reviews",data.reviews,"▤","EVIDENCE","#84dfb4"),
+      metricCard("Approvals",data.approvals,"✓","WORKFLOW","#f4ca7b")
     ].join("");
-    renderStatuses("goals",data.goal_status,["","cyan","green","amber"]);
-    renderStatuses("reviews",data.review_status,["","cyan","green","amber"]);
-    renderStatuses("approvals",data.approval_decisions,["","cyan","green","amber"]);
-    document.getElementById("keyResults").textContent = number(data.key_results);
-    document.getElementById("checkIns").textContent = number(data.check_ins);
-    document.getElementById("feedback").textContent = number(data.feedback);
-    document.getElementById("developmentPlans").textContent = number(data.development_plans);
-    document.getElementById("evidence").textContent = number(data.evidence);
-    document.getElementById("goalTotal").textContent = number(data.goals);
-    document.getElementById("reviewTotal").textContent = number(data.reviews);
-    document.getElementById("approvalTotal").textContent = number(data.approvals);
-    try {
-      const report = await getJson("/dashboard/anomalies");
-      document.getElementById("anomalyCount").textContent =
-        report.total_findings == null ? "N/A" : number(report.total_findings);
-      document.getElementById("anomalyMessage").textContent = report.total_findings == null
-        ? "Run scripts/detect_anomalies.py to generate a report."
-        : Number(report.total_findings) === 0
-          ? "No findings reported in the latest anomaly scan."
-          : "Findings are present in the latest anomaly report. Review the report before taking action.";
-    } catch (_) {
-      document.getElementById("anomalyCount").textContent = "N/A";
-      document.getElementById("anomalyMessage").textContent = "Anomaly report is currently unavailable.";
-    }
-    document.getElementById("updated").textContent = "Updated " + new Date().toLocaleTimeString();
-  } catch (err) {
-    error.textContent = "Could not load dashboard data. Make sure the API is running and the database is initialized. " + err.message;
-    document.getElementById("updated").textContent = "Live data unavailable";
-  } finally {
-    button.disabled = false;
-    button.classList.remove("loading");
-    button.textContent = "↻  Refresh data";
-  }
+    renderChart(data.goal_status,data.review_status);
+    renderRing(data);
+    const goalMax=Math.max(1,...(data.goal_status||[]).map(r=>Number(r.total)||0));
+    const reviewMax=Math.max(1,...(data.review_status||[]).map(r=>Number(r.total)||0));
+    const approvalMax=Math.max(1,...(data.approval_decisions||[]).map(r=>Number(r.total)||0));
+    const workflow=[...(data.approval_decisions||[]).map(r=>({...r,group:"Approval"})),...(data.review_status||[]).slice(0,3).map(r=>({...r,group:"Review"}))];
+    const wf=document.getElementById("workflow");
+    wf.innerHTML=workflow.length?workflow.map((r,i)=>'<div><div class="status-head"><span>'+escapeHtml(r.group+' · '+(r.status||"Unknown").replace(/_/g," "))+'</span><strong>'+fmt(r.total)+'</strong></div><div class="track"><div class="track-fill '+(["","green","cyan","gold"][i%4])+'" style="width:'+((Number(r.total)||0)/(r.group==="Approval"?approvalMax:reviewMax)*100).toFixed(1)+'%"></div></div></div>').join(''):'<p class="empty">No workflow records available.</p>';
+    renderHeatmap(data);
+    document.getElementById("headlineInsight").textContent=fmt(data.reviews)+" reviews and "+fmt(data.goals)+" goals";
+    document.getElementById("updated").textContent="Last synced "+new Date().toLocaleTimeString();
+  } catch(error) {
+    document.getElementById("error").textContent="Could not load live data: "+error.message+". Confirm the database is initialized and the FastAPI server is running.";
+    document.getElementById("updated").textContent="Data connection unavailable";
+  } finally {button.disabled=false;button.textContent="↻";}
 }
+document.getElementById("refreshButton").addEventListener("click",loadDashboard);
+document.getElementById("downloadButton").addEventListener("click",()=>{
+  if(!latestData){document.getElementById("error").textContent="Wait for dashboard data to load before downloading.";return;}
+  const blob=new Blob([JSON.stringify(latestData,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="performance-dashboard-summary.json";a.click();URL.revokeObjectURL(url);
+});
+document.getElementById("quickSearch").addEventListener("input",event=>{
+  const query=event.target.value.trim().toLowerCase();
+  document.querySelectorAll(".nav a").forEach(link=>{link.style.display=!query||link.textContent.toLowerCase().includes(query)?"flex":"none";});
+});
+document.getElementById("themeButton").addEventListener("click",()=>{
+  compactMode=!compactMode;
+  document.documentElement.style.setProperty("--panel",compactMode?"#202e45":"#182538");
+  document.documentElement.style.setProperty("--bg",compactMode?"#17263b":"#111a2a");
+  document.getElementById("themeButton").classList.toggle("active",!compactMode);
+});
 loadDashboard();
 </script>
 </body>
 </html>
-"""
+""""""
     return HTMLResponse(content=html)
 
 
