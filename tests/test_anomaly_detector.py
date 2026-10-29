@@ -12,7 +12,6 @@ def test_detector_finds_missing_review_audit(tmp_path, monkeypatch):
     test_db = tmp_path / "test_employee_performance.db"
     test_report = tmp_path / "anomaly_report.json"
 
-    # Work on a copy; never alter the real database.
     shutil.copy2(original_db, test_db)
 
     with sqlite3.connect(test_db) as conn:
