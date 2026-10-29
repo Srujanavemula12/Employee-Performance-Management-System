@@ -114,7 +114,8 @@ def main():
         ]
 
         for entity_type, table, id_column, actor_column in audit_sources:
-            source_rows = rows_as_dicts(conn, table)
+            # Every review needs an audit event and version snapshot for integrity checks.
+            source_rows = rows_as_dicts(conn, table, limit=10000) if entity_type == "REVIEW" else rows_as_dicts(conn, table)
 
             for index, row in enumerate(source_rows, start=1):
                 entity_id = row[id_column]

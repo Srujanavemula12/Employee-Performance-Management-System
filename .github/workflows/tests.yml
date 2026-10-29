@@ -20,4 +20,4 @@ jobs:
           python scripts/generate_traceability.py
           python scripts/update_goal_statuses.py
           python scripts/detect_anomalies.py
-      - run: pytest -q
+      - run: python -m pytest -q
