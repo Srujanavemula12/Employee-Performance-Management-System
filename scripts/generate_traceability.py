@@ -60,7 +60,6 @@ def main():
         version_rows = []
         approval_rows = []
 
-        # Generate evidence linked to real existing records.
         evidence_sources = [
             ("CHECK_IN", "check_ins", "check_in_id", "employee_id"),
             ("FEEDBACK", "feedback", "feedback_id", "reviewer_employee_id"),
@@ -102,7 +101,6 @@ def main():
                     actor,
                 ))
 
-        # Create initial audit records and version snapshots.
         audit_sources = [
             ("GOAL", "goals", "goal_id", "employee_id"),
             ("CHECK_IN", "check_ins", "check_in_id", "employee_id"),
@@ -117,7 +115,6 @@ def main():
         ]
 
         for entity_type, table, id_column, actor_column in audit_sources:
-            # Audit and version history must cover every row, not only a sample.
             source_rows = rows_as_dicts(conn, table, limit=None)
 
             for index, row in enumerate(source_rows, start=1):
@@ -158,7 +155,6 @@ def main():
                     "2026-10-28 10:10:00",
                 ))
 
-        # Create pending approval requests for development plans.
         plans = rows_as_dicts(conn, "development_plans")
 
         for index, plan in enumerate(plans, start=1):
@@ -189,7 +185,6 @@ def main():
                 None,
             ))
 
-        # Create review approval records consistent with review status.
         eligible_reviews = conn.execute(
             """
             SELECT review_id, employee_id, manager_employee_id, status
@@ -222,7 +217,6 @@ def main():
                 else None,
             ))
 
-        # Insert evidence and links.
         conn.executemany(
             """
             INSERT INTO evidence (
@@ -243,7 +237,6 @@ def main():
             link_rows,
         )
 
-        # Insert audit history.
         conn.executemany(
             """
             INSERT INTO audit_events (
@@ -255,7 +248,6 @@ def main():
             audit_rows,
         )
 
-        # Insert record snapshots.
         conn.executemany(
             """
             INSERT INTO record_versions (
@@ -266,7 +258,6 @@ def main():
             version_rows,
         )
 
-        # Insert approval workflow records.
         conn.executemany(
             """
             INSERT INTO approvals (
