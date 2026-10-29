@@ -23,7 +23,6 @@ def main():
                 "details": details,
             })
 
-        # Rule 1: A check-in must belong to the goal owner.
         rows = conn.execute("""
             SELECT c.check_in_id, c.employee_id, g.employee_id AS owner_id
             FROM check_ins c
@@ -40,8 +39,6 @@ def main():
                 f"from goal owner {row['owner_id']}.",
             )
 
-        # Rule 2: Completed numeric key results must not exceed target
-        # without being explicitly reviewed.
         rows = conn.execute("""
             SELECT key_result_id, current_value, target_value
             FROM key_results
@@ -57,7 +54,6 @@ def main():
                 f"target {row['target_value']}.",
             )
 
-        # Rule 3: Submitted reviews require submission timestamps.
         rows = conn.execute("""
             SELECT review_id
             FROM reviews
@@ -73,7 +69,6 @@ def main():
                 "Submitted or approved review has no submission timestamp.",
             )
 
-        # Rule 4: Approved reviews require approval timestamps.
         rows = conn.execute("""
             SELECT review_id
             FROM reviews
@@ -88,7 +83,6 @@ def main():
                 "Approved review has no approval timestamp.",
             )
 
-        # Rule 5: Submitted feedback requires a submission timestamp.
         rows = conn.execute("""
             SELECT feedback_id
             FROM feedback
@@ -103,7 +97,6 @@ def main():
                 "Submitted feedback has no submission timestamp.",
             )
 
-        # Rule 6: Every review should have an audit record.
         rows = conn.execute("""
             SELECT r.review_id
             FROM reviews r
@@ -122,7 +115,6 @@ def main():
                 "No audit event exists for this review.",
             )
 
-        # Rule 7: Every evidence link must reference an existing entity.
         link_checks = [
             ("CHECK_IN", "check_ins", "check_in_id"),
             ("FEEDBACK", "feedback", "feedback_id"),
@@ -152,7 +144,6 @@ def main():
                     f"Linked {entity_type} {row['entity_id']} does not exist.",
                 )
 
-        # Rule 8: Approval decision timestamps must be consistent.
         rows = conn.execute("""
             SELECT approval_id
             FROM approvals
@@ -170,7 +161,6 @@ def main():
                 "Approval decision, timestamp, or rejection reason is inconsistent.",
             )
 
-        # Rule 9: Review approval decisions should agree with review status.
         rows = conn.execute("""
             SELECT a.approval_id, a.entity_id, a.decision, r.status
             FROM approvals a
