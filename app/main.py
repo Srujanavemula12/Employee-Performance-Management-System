@@ -354,136 +354,160 @@ def dashboard_page():
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Employee Performance Dashboard</title>
+<meta name="theme-color" content="#0b0d14">
+<title>Pulse — Performance Intelligence</title>
 <style>
-:root {
-  font-family: Inter, Segoe UI, Arial, sans-serif;
-  color: #172033;
-  background: #f4f7fb;
-}
-* { box-sizing: border-box; }
-body { margin: 0; }
-header {
-  background: #172554;
-  color: white;
-  padding: 25px clamp(18px, 4vw, 48px);
-}
-header h1 { margin: 0 0 7px; font-size: clamp(22px, 3vw, 30px); }
-header p { margin: 0; color: #cbd5e1; }
-main { max-width: 1250px; margin: auto; padding: 25px 18px 45px; }
-.toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
-button {
-  background:#2563eb; color:white; border:0; border-radius:9px;
-  padding:11px 16px; cursor:pointer; font-weight:600;
-}
-button:hover { background:#1d4ed8; }
-#updated { color:#64748b; font-size:13px; }
-.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:15px; }
-.card, .panel {
-  background:white; border:1px solid #e2e8f0; border-radius:14px;
-  padding:20px; box-shadow:0 3px 12px rgba(15,23,42,.035);
-}
-.card .label { color:#64748b; font-size:13px; }
-.card .value { font-size:30px; font-weight:750; margin-top:10px; }
-.card .hint { color:#64748b; font-size:12px; margin-top:7px; }
-.panels { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:17px; margin-top:20px; }
-.panel h2 { font-size:17px; margin:0 0 18px; }
-.status-row { margin:13px 0; }
-.status-head { display:flex; justify-content:space-between; gap:12px; font-size:13px; margin-bottom:7px; }
-.track { height:9px; background:#e9eef6; border-radius:20px; overflow:hidden; }
-.bar { height:100%; background:#3b82f6; border-radius:20px; }
-.empty { color:#64748b; font-size:13px; }
-.alert { border-left:4px solid #f59e0b; background:#fffbeb; padding:14px; border-radius:7px; }
-.alert strong { font-size:25px; display:block; margin-bottom:5px; }
-footer { text-align:center; color:#64748b; font-size:12px; padding:18px; }
-#error { color:#b91c1c; margin:10px 0; }
+:root{color-scheme:dark;--bg:#0b0d14;--surface:#121621;--surface2:#171c29;--line:#252c3b;--text:#eef2ff;--muted:#929bb0;--purple:#9b8cff;--cyan:#55d6e8;--green:#55d6a0;--amber:#f7c76b;--red:#ff8292;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -15%,rgba(117,90,255,.13),transparent 42%),var(--bg);color:var(--text);min-height:100vh}button,a{font:inherit}a{color:inherit;text-decoration:none}.app{display:grid;grid-template-columns:246px minmax(0,1fr);min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;background:rgba(14,17,26,.94);border-right:1px solid var(--line);padding:25px 17px;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:11px;padding:0 10px 31px}.brand-mark{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:linear-gradient(145deg,#9b8cff,#5d6cff);color:#fff;font-weight:900;box-shadow:0 6px 25px #7165ff38}.brand-name{font-weight:800;letter-spacing:.02em}.brand-sub{font-size:11px;color:var(--muted);margin-top:3px}.nav-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#687187;padding:0 12px;margin:12px 0 9px}.nav{display:grid;gap:5px}.nav a{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;color:#9da6ba;font-size:13px;transition:.18s}.nav a:hover,.nav a.active{background:#24243a;color:#e8e4ff}.nav a.active{box-shadow:inset 2px 0 var(--purple)}.nav-icon{width:18px;text-align:center;font-size:15px}.sidebar-bottom{margin-top:auto;padding:15px 11px 0}.health-pill{display:flex;align-items:center;gap:8px;font-size:11px;color:#a7b3c8;background:#151c27;border:1px solid var(--line);border-radius:10px;padding:11px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px #55d6a066}.version{font-size:10px;color:#667087;padding:14px 4px 0}.main{min-width:0;padding:27px clamp(18px,3.1vw,43px) 30px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:30px}.eyebrow{font-size:10px;color:var(--purple);text-transform:uppercase;letter-spacing:.18em;font-weight:800;margin-bottom:8px}.page-title{font-size:clamp(24px,3vw,31px);letter-spacing:-.04em;margin:0;font-weight:750}.page-subtitle{color:var(--muted);font-size:13px;margin:8px 0 0}.top-actions{display:flex;align-items:center;gap:10px}.period{border:1px solid var(--line);border-radius:9px;background:var(--surface);color:#c5cce0;padding:10px 12px;font-size:12px}.refresh{border:0;border-radius:9px;background:linear-gradient(135deg,#8d7bff,#6b72ff);color:white;font-size:12px;font-weight:750;padding:11px 15px;cursor:pointer;box-shadow:0 5px 20px #7d70ff26}.refresh:hover{filter:brightness(1.1)}.refresh:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px}.section-head h2{font-size:14px;letter-spacing:-.01em;margin:0}.section-note{font-size:11px;color:var(--muted)}.error{color:var(--red);font-size:12px;margin:0 0 14px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.metric,.panel{background:linear-gradient(145deg,rgba(23,28,41,.98),rgba(17,21,32,.98));border:1px solid var(--line);border-radius:15px;box-shadow:0 8px 30px #00000012}.metric{padding:17px 18px;min-width:0;position:relative;overflow:hidden}.metric:after{content:"";position:absolute;width:75px;height:75px;right:-28px;top:-32px;border-radius:50%;background:var(--glow,#9b8cff);opacity:.1;filter:blur(2px)}.metric-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.metric-label{font-size:11px;color:#a1abc0}.metric-icon{width:29px;height:29px;display:grid;place-items:center;border:1px solid var(--line);border-radius:9px;color:var(--accent,var(--purple));background:#ffffff04;font-size:14px}.metric-value{font-size:clamp(25px,2.5vw,32px);font-weight:800;letter-spacing:-.05em;margin:15px 0 5px;font-variant-numeric:tabular-nums}.metric-foot{font-size:10px;color:#7f899f}.metric-foot span{color:var(--accent,var(--green));font-weight:700}.workspace{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:14px;margin-top:23px}.panel{padding:20px;min-width:0}.status-list{display:grid;gap:19px}.status-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px;font-size:12px}.status-name{color:#cbd2e4}.status-value{font-variant-numeric:tabular-nums;font-weight:750}.track{height:7px;border-radius:99px;background:#252c3b;overflow:hidden}.bar{height:100%;border-radius:99px;background:linear-gradient(90deg,#7669ff,#b1a5ff);min-width:0}.bar.cyan{background:linear-gradient(90deg,#38bcd4,#75e2ed)}.bar.green{background:linear-gradient(90deg,#29b985,#6be6b1)}.bar.amber{background:linear-gradient(90deg,#c58b32,#ffd889)}.empty{color:var(--muted);font-size:12px}.summary-list{display:grid;gap:0}.summary-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #252c3b;font-size:12px}.summary-row:last-child{border-bottom:0}.summary-label{display:flex;align-items:center;gap:9px;color:#b9c2d6}.summary-bullet{width:7px;height:7px;border-radius:3px;background:var(--bullet,var(--purple))}.summary-value{font-weight:750;font-variant-numeric:tabular-nums}.insight-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:14px}.insight{padding:16px 17px;background:#111722;border:1px solid var(--line);border-radius:13px}.insight-label{font-size:10px;color:var(--muted);margin-bottom:9px}.insight-value{font-size:19px;font-weight:800;letter-spacing:-.03em}.insight-note{font-size:10px;color:#7e8aa1;margin-top:6px}.insight-value.purple{color:var(--purple)}.insight-value.cyan{color:var(--cyan)}.insight-value.green{color:var(--green)}.anomaly-banner{display:flex;align-items:center;gap:13px;margin-top:15px;padding:15px 17px;border:1px solid #4a3b2a;background:linear-gradient(100deg,#241e19,#171923);border-radius:13px}.anomaly-icon{width:37px;height:37px;display:grid;place-items:center;border-radius:11px;background:#f7c76b14;color:var(--amber);font-size:17px;flex-shrink:0}.anomaly-copy{min-width:0}.anomaly-title{font-size:12px;font-weight:750}.anomaly-sub{font-size:10px;color:var(--muted);margin-top:4px}.anomaly-count{margin-left:auto;font-size:22px;font-weight:850;color:var(--amber);font-variant-numeric:tabular-nums}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:25px;padding-top:16px;border-top:1px solid var(--line);font-size:10px;color:#69748b}.footer a{color:#a9a0ff}.loading{opacity:.65}.mobile-brand{display:none}
+@media(max-width:1100px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace{grid-template-columns:1fr 1fr}.sidebar{width:220px}.app{grid-template-columns:220px minmax(0,1fr)}}
+@media(max-width:760px){.app{display:block}.sidebar{position:static;width:auto;height:auto;padding:13px 17px;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:0}.sidebar .nav-label,.sidebar .nav,.sidebar-bottom{display:none}.main{padding:22px 15px}.topbar{align-items:flex-start;flex-direction:column;margin-bottom:23px}.top-actions{width:100%}.period{flex:1}.workspace{grid-template-columns:1fr}.insight-grid{grid-template-columns:1fr 1fr}.footer{flex-direction:column}.page-title{font-size:26px}}
+@media(max-width:400px){.metrics{grid-template-columns:1fr 1fr;gap:9px}.metric{padding:13px}.metric-value{font-size:25px}.metric-label{font-size:10px}.panel{padding:16px}.insight-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header>
-  <h1>Employee Performance</h1>
-  <p>Goals, reviews, approvals and workforce insights</p>
-</header>
-<main>
-  <div class="toolbar">
-    <div><strong>Performance overview</strong><div id="updated">Loading dashboard data...</div></div>
-    <button onclick="loadDashboard()">Refresh data</button>
-  </div>
-  <div id="error"></div>
-  <section class="cards" id="cards"></section>
-  <section class="panels">
-    <div class="panel"><h2>Goal status</h2><div id="goals"></div></div>
-    <div class="panel"><h2>Review status</h2><div id="reviews"></div></div>
-    <div class="panel">
-      <h2>Approval overview</h2>
-      <div id="approvals"></div>
-      <div class="alert" style="margin-top:18px">
-        <strong id="anomalyCount">?</strong>
-        <span>Findings in the latest anomaly report</span>
-      </div>
-    </div>
-  </section>
-</main>
-<footer>Employee Performance Management System ? Live data from the local API</footer>
+<div class="app">
+  <aside class="sidebar" aria-label="Main navigation">
+    <div class="brand"><div class="brand-mark">P</div><div><div class="brand-name">PULSE</div><div class="brand-sub">People Intelligence</div></div></div>
+    <div class="nav-label">Workspace</div>
+    <nav class="nav">
+      <a class="active" href="/dashboard" aria-current="page"><span class="nav-icon">◫</span>Overview</a>
+      <a href="/employees"><span class="nav-icon">♙</span>Employees</a>
+      <a href="/goals"><span class="nav-icon">◎</span>Goals &amp; outcomes</a>
+      <a href="/check-ins"><span class="nav-icon">↗</span>Check-ins</a>
+      <a href="/reviews"><span class="nav-icon">▤</span>Performance reviews</a>
+      <a href="/approvals"><span class="nav-icon">✓</span>Approvals</a>
+      <a href="/evidence"><span class="nav-icon">⌁</span>Evidence library</a>
+    </nav>
+    <div class="nav-label">Governance</div>
+    <nav class="nav"><a href="/audit-events"><span class="nav-icon">◷</span>Audit activity</a><a href="/docs"><span class="nav-icon">⌘</span>API reference</a></nav>
+    <div class="sidebar-bottom"><div class="health-pill"><span class="dot"></span><span>Dashboard connected to API</span></div><div class="version">EMPLOYEE PERFORMANCE SUITE · V1.0</div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <div><div class="eyebrow">Performance intelligence / Overview</div><h1 class="page-title">Good work starts with clarity.</h1><p class="page-subtitle">A live view of goals, feedback and review activity across your organization.</p></div>
+      <div class="top-actions"><div class="period">◷ &nbsp; Current dataset</div><button class="refresh" id="refreshButton" onclick="loadDashboard()">↻ &nbsp; Refresh data</button></div>
+    </header>
+    <div class="section-head"><h2>Workforce snapshot</h2><span class="section-note" id="updated" aria-live="polite">Loading live metrics…</span></div>
+    <div class="error" id="error" role="alert"></div>
+    <section class="metrics" id="cards" aria-label="Workforce metrics">
+      <article class="metric loading"><div class="metric-label">Loading metrics</div><div class="metric-value">—</div></article>
+      <article class="metric loading"><div class="metric-label">Loading metrics</div><div class="metric-value">—</div></article>
+      <article class="metric loading"><div class="metric-label">Loading metrics</div><div class="metric-value">—</div></article>
+      <article class="metric loading"><div class="metric-label">Loading metrics</div><div class="metric-value">—</div></article>
+    </section>
+    <section class="workspace">
+      <article class="panel"><div class="section-head"><h2>Goal progress status</h2><span class="section-note">Distribution</span></div><div class="status-list" id="goals"><p class="empty">Loading goal status…</p></div></article>
+      <article class="panel"><div class="section-head"><h2>Review cycle health</h2><span class="section-note">Current records</span></div><div class="status-list" id="reviews"><p class="empty">Loading review status…</p></div></article>
+    </section>
+    <section class="workspace">
+      <article class="panel"><div class="section-head"><h2>Approval decisions</h2><span class="section-note">Workflow overview</span></div><div class="status-list" id="approvals"><p class="empty">Loading approvals…</p></div></article>
+      <article class="panel"><div class="section-head"><h2>Activity at a glance</h2><span class="section-note">Connected records</span></div>
+        <div class="summary-list">
+          <div class="summary-row"><span class="summary-label"><i class="summary-bullet" style="--bullet:#9b8cff"></i>Key results</span><span class="summary-value" id="keyResults">—</span></div>
+          <div class="summary-row"><span class="summary-label"><i class="summary-bullet" style="--bullet:#55d6e8"></i>Check-ins</span><span class="summary-value" id="checkIns">—</span></div>
+          <div class="summary-row"><span class="summary-label"><i class="summary-bullet" style="--bullet:#55d6a0"></i>Feedback entries</span><span class="summary-value" id="feedback">—</span></div>
+          <div class="summary-row"><span class="summary-label"><i class="summary-bullet" style="--bullet:#f7c76b"></i>Development plans</span><span class="summary-value" id="developmentPlans">—</span></div>
+          <div class="summary-row"><span class="summary-label"><i class="summary-bullet" style="--bullet:#ff8292"></i>Evidence records</span><span class="summary-value" id="evidence">—</span></div>
+        </div>
+      </article>
+    </section>
+    <section class="insight-grid" aria-label="Workflow indicators">
+      <article class="insight"><div class="insight-label">GOALS TRACKED</div><div class="insight-value purple" id="goalTotal">—</div><div class="insight-note">Across the dataset</div></article>
+      <article class="insight"><div class="insight-label">REVIEWS RECORDED</div><div class="insight-value cyan" id="reviewTotal">—</div><div class="insight-note">Performance review records</div></article>
+      <article class="insight"><div class="insight-label">APPROVAL ITEMS</div><div class="insight-value green" id="approvalTotal">—</div><div class="insight-note">Review and workflow approvals</div></article>
+    </section>
+    <section class="anomaly-banner" aria-live="polite"><div class="anomaly-icon">⚑</div><div class="anomaly-copy"><div class="anomaly-title">Data quality monitor</div><div class="anomaly-sub" id="anomalyMessage">Checking the latest anomaly report…</div></div><div class="anomaly-count" id="anomalyCount">—</div></section>
+    <footer class="footer"><span>Pulse · Employee Performance Management System</span><span>Live local API data · <a href="/docs">Explore API documentation ↗</a></span></footer>
+  </main>
+</div>
 <script>
-const number = n => Number(n || 0).toLocaleString();
-function renderStatuses(targetId, rows) {
+const number = value => Number(value || 0).toLocaleString();
+const safeText = value => String(value == null ? "Unknown" : value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+async function getJson(url) {
+  const response = await fetch(url, {headers:{"Accept":"application/json"}});
+  if (!response.ok) throw new Error(url + " returned HTTP " + response.status);
+  return response.json();
+}
+function renderStatuses(targetId, rows, palette) {
   const target = document.getElementById(targetId);
-  if (!rows || !rows.length) {
+  if (!Array.isArray(rows) || !rows.length) {
     target.innerHTML = '<p class="empty">No status data available.</p>';
     return;
   }
-  const max = Math.max(...rows.map(r => Number(r.total)), 1);
-  target.innerHTML = rows.map(row => `
-    <div class="status-row">
-      <div class="status-head"><span>${row.status || "Unknown"}</span><strong>${number(row.total)}</strong></div>
-      <div class="track"><div class="bar" style="width:${Number(row.total)/max*100}%"></div></div>
-    </div>`).join("");
+  const total = rows.reduce((sum, row) => sum + Math.max(0, Number(row.total) || 0), 0);
+  const colors = palette || ["", "cyan", "green", "amber"];
+  target.innerHTML = rows.map((row, index) => {
+    const count = Math.max(0, Number(row.total) || 0);
+    const width = total ? count / total * 100 : 0;
+    const color = colors[index % colors.length];
+    return '<div class="status-row"><div class="status-head"><span class="status-name">' +
+      safeText(row.status || "Unknown") + '</span><strong class="status-value">' + number(count) +
+      '</strong></div><div class="track" role="img" aria-label="' + safeText(row.status || "Unknown") +
+      ': ' + number(count) + ' records"><div class="bar ' + color + '" style="width:' + width.toFixed(2) +
+      '%"></div></div></div>';
+  }).join("");
+}
+function metric(label, value, hint, icon, accent) {
+  return '<article class="metric" style="--accent:' + accent + ';--glow:' + accent +
+    '"><div class="metric-top"><div class="metric-label">' + label +
+    '</div><div class="metric-icon">' + icon + '</div></div><div class="metric-value">' +
+    number(value) + '</div><div class="metric-foot">' + hint + '</div></article>';
 }
 async function loadDashboard() {
-  document.getElementById("error").textContent = "";
+  const button = document.getElementById("refreshButton");
+  const error = document.getElementById("error");
+  button.disabled = true;
+  button.classList.add("loading");
+  button.textContent = "↻  Refreshing…";
+  error.textContent = "";
   try {
-    const response = await fetch("/dashboard/summary");
-    if (!response.ok) throw new Error("Dashboard API returned HTTP " + response.status);
-    const data = await response.json();
-    const metrics = [
-      ["Employees", data.employees, "People in the workforce"],
-      ["Goals", data.goals, "Tracked performance goals"],
-      ["Key results", data.key_results, "Measurable outcomes"],
-      ["Check-ins", data.check_ins, "Progress updates"],
-      ["Reviews", data.reviews, "Performance review records"],
-      ["Approvals", data.approvals, "Approval workflow records"],
-      ["Feedback", data.feedback, "Feedback records"],
-      ["Development plans", data.development_plans, "Growth plans"]
-    ];
-    document.getElementById("cards").innerHTML = metrics.map(([label,value,hint]) => `
-      <article class="card"><div class="label">${label}</div>
-      <div class="value">${number(value)}</div><div class="hint">${hint}</div></article>
-    `).join("");
-    renderStatuses("goals", data.goal_status);
-    renderStatuses("reviews", data.review_status);
-    renderStatuses("approvals", data.approval_decisions);
+    const data = await getJson("/dashboard/summary");
+    document.getElementById("cards").innerHTML = [
+      metric("Employees",data.employees,"People in the workforce","♙","#9b8cff"),
+      metric("Goals",data.goals,"Tracked performance goals","◎","#55d6e8"),
+      metric("Reviews",data.reviews,"Performance review records","▤","#55d6a0"),
+      metric("Approvals",data.approvals,"Workflow decisions","✓","#f7c76b")
+    ].join("");
+    renderStatuses("goals",data.goal_status,["","cyan","green","amber"]);
+    renderStatuses("reviews",data.review_status,["","cyan","green","amber"]);
+    renderStatuses("approvals",data.approval_decisions,["","cyan","green","amber"]);
+    document.getElementById("keyResults").textContent = number(data.key_results);
+    document.getElementById("checkIns").textContent = number(data.check_ins);
+    document.getElementById("feedback").textContent = number(data.feedback);
+    document.getElementById("developmentPlans").textContent = number(data.development_plans);
+    document.getElementById("evidence").textContent = number(data.evidence);
+    document.getElementById("goalTotal").textContent = number(data.goals);
+    document.getElementById("reviewTotal").textContent = number(data.reviews);
+    document.getElementById("approvalTotal").textContent = number(data.approvals);
     try {
-      const a = await fetch("/dashboard/anomalies");
-      const report = await a.json();
+      const report = await getJson("/dashboard/anomalies");
       document.getElementById("anomalyCount").textContent =
-        number(report.total_findings);
+        report.total_findings == null ? "N/A" : number(report.total_findings);
+      document.getElementById("anomalyMessage").textContent = report.total_findings == null
+        ? "Run scripts/detect_anomalies.py to generate a report."
+        : Number(report.total_findings) === 0
+          ? "No findings reported in the latest anomaly scan."
+          : "Findings are present in the latest anomaly report. Review the report before taking action.";
     } catch (_) {
       document.getElementById("anomalyCount").textContent = "N/A";
+      document.getElementById("anomalyMessage").textContent = "Anomaly report is currently unavailable.";
     }
-    document.getElementById("updated").textContent =
-      "Last refreshed: " + new Date().toLocaleString();
-  } catch (error) {
-    document.getElementById("error").textContent =
-      "Could not load dashboard data. Check that the FastAPI server is running. " + error.message;
-    document.getElementById("updated").textContent = "Refresh after checking the API server.";
+    document.getElementById("updated").textContent = "Updated " + new Date().toLocaleTimeString();
+  } catch (err) {
+    error.textContent = "Could not load dashboard data. Make sure the API is running and the database is initialized. " + err.message;
+    document.getElementById("updated").textContent = "Live data unavailable";
+  } finally {
+    button.disabled = false;
+    button.classList.remove("loading");
+    button.textContent = "↻  Refresh data";
   }
 }
 loadDashboard();
 </script>
 </body>
 </html>
-"""
+""""""
     return HTMLResponse(content=html)
 
 
