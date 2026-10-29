@@ -104,7 +104,6 @@ def main():
                 1,
             ))
 
-            # SUBMITTED feedback requires submitted_at.
             feedback_status = (
                 "SUBMITTED" if submitted_at is not None else "DRAFT"
             )
