@@ -1,0 +1,23 @@
+name: Tests
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -r requirements.txt
+      - run: |
+          python scripts/setup_db.py
+          python scripts/generate_data.py
+          python scripts/generate_goals.py
+          python scripts/generate_checkins.py
+          python scripts/generate_reviews.py
+          python scripts/generate_traceability.py
+          python scripts/update_goal_statuses.py
+          python scripts/detect_anomalies.py
+      - run: pytest -q
