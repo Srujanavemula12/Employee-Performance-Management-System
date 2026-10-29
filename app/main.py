@@ -36,7 +36,6 @@ def fetch_one(sql, params=()):
 
 
 def get_record(table, id_column, record_id):
-    # Table and column names below are supplied only by our own routes.
     return fetch_one(
         f"SELECT * FROM {table} WHERE {id_column} = ?",
         (record_id,),
