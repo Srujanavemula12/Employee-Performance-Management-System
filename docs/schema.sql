@@ -333,3 +333,9 @@ CREATE TABLE IF NOT EXISTS approvals (
     ),
     CHECK (decision <> 'REJECTED' OR decision_reason IS NOT NULL)
 );
+
+-- Support traceability integrity checks and entity history lookups at scale.
+CREATE INDEX IF NOT EXISTS idx_audit_events_entity
+    ON audit_events (entity_type, entity_id);
+CREATE INDEX IF NOT EXISTS idx_record_versions_entity_version
+    ON record_versions (entity_type, entity_id, version_number);
