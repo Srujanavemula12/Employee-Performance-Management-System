@@ -66,7 +66,6 @@ def generate_employees(connection):
 def generate_managers(connection):
     rows = []
 
-    # Use the first 500 employees as managers.
     for i in range(1, MANAGER_COUNT + 1):
         rows.append((
             f"MGR-{i:04d}",
