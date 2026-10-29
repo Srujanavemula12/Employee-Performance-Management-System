@@ -612,7 +612,7 @@ def data_page(section: str):
     }
     title = page_titles[section]
     endpoint = config[section]
-    html = """<!doctype html>
+    html = r"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
